@@ -1,7 +1,7 @@
 class FriendsController < ApplicationController
   def index
     @friends = Friend.all
-    fb_userdata(current_user.access_token, current_user.uid) 
+    # fb_userdata(current_user.access_token, current_user.uid) 
   end
 
   def new
