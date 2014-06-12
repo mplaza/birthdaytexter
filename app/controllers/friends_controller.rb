@@ -1,7 +1,7 @@
 class FriendsController < ApplicationController
   def index
     @friends = Friend.all
-    fb_userdata(current_user.uid)
+    fb_userdata(current_user.access_token, current_user.uid) 
   end
 
   def new
@@ -28,10 +28,11 @@ class FriendsController < ApplicationController
   	@friend = Friend.find(params[:id])
   end
 
-  def fb_userdata(uid)
-    @uid = uid
-    user_hash = MiniFB.call(ENV['APP_ID'], ENV['APP_SECRET'], "Users.getInfo", "session_key"=>@session_key, "uids"=>@uid, "fields"=>"birthday")
-    puts "THIS IS THE #{user_hash}"
+  def fb_userdata(access_token, uid)
+    @id = uid
+    @access_token = access_token
+    @response_hash = MiniFB.get(@access_token, @id)
+    puts "THIS IS THE #{@response_hash}"
   end
 
 
