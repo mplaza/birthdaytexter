@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BirthBookApp</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse" role="navigation">
+	<a class="navbar-brand" id = "main" href="/friends">I WANNA TEXT YOU UP</a>
+	<ul class="nav navbar-nav navbar-right"> 
+		<% if user_signed_in? %>
+		<li class="navbar-text">Logged in as <strong><%= current_user.email %></strong></li>
+			    <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+
+		<% else %>
+		<li><%= link_to "Sign In", new_user_session_path %></li>
+		<% end %>
+		<li class="navbar-text">       </li>	
+	</ul>
+
+</nav>
+
+<%= yield %>
+
+</body>
+</html>

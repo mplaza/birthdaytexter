@@ -1,0 +1,8 @@
+<h1> Friends </h1>
+<div contaner-fluid>
+	<% @friends.each do |f| %>
+	<div><%= f.name %></div>
+	<% end %>
+</div>
+
+<%= link_to 'new friend', new_friend_path, :class =>"btn btn-success" %>
