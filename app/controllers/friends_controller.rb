@@ -28,12 +28,12 @@ class FriendsController < ApplicationController
   	@friend = Friend.find(params[:id])
   end
 
-  def fb_userdata(access_token, uid)
-    @id = uid
-    @access_token = access_token
-    @response_hash = MiniFB.get(@access_token, @id)
-    puts "THIS IS THE #{@response_hash}"
-  end
+  # def fb_userdata(access_token, uid)
+  #   @id = uid
+  #   @access_token = access_token
+  #   @response_hash = MiniFB.get(@access_token, @id)
+  #   puts "THIS IS THE #{@response_hash}"
+  # end
 
 
     def text_updates(friend)
