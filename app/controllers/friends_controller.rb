@@ -48,6 +48,19 @@ class FriendsController < ApplicationController
           :body => "#{@friend.name}: #{@friend.message}"
           })
     end
+
+    def text_confirm(friend)
+      get '/sms-quickstart' do
+      reply = params[:Body]
+      if reply == 'yes'
+          @twiml = Twilio::TwiML::Response.new do |r|
+          r.Message "Great. We'll send the message."
+      end
+          @twiml.text
+      end
+      end
+
+    end
  
 
 

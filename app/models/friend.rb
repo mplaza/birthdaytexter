@@ -3,6 +3,6 @@ class Friend < ActiveRecord::Base
 
 	def convertdate
 		newyear = Time.new.utc.year
-		return "#{newyear}/#{monthbirth}/#{daybirth} 12:35:00"
+		return "#{newyear}/#{monthbirth}/#{daybirth} 13:38:00"
 	end
 end
