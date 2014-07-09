@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :friends
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", sessions: 'sessions' }
   root to: 'friends#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
