@@ -34,20 +34,19 @@
 <div class="modal fade" id="loginModal" tabindex="-1">
 <div class="modal-dialog modal-sm">
 <div class="modal-content">
-  <div class="modal-header">
-    <button class="close" data-dismiss="modal">×</button>
-    <h3>Sign In</h3>
-  </div>
   <div class="modal-body">
+    <button class="close" data-dismiss="modal">×</button>
+  </div>
+  <div class="modal-body text-center">
     <% resource_class.omniauth_providers.each do |provider| %>
         <%= link_to omniauth_authorize_path(resource_name, provider) do%>
           <button class='zocial facebook'>Login with Facebook</button>
         <% end %>
       <% end %>
       <br></br>
-    <button class='zocial email'>Or Login with Email</button>
+    <button class='zocial email' data-toggle="collapse" data-target="#emailsignup">Or Login with Email</button>
     <br></br>
-    <div class="panel panel-success">
+    <div class="panel panel-success collapse" id = "emailsignup">
       <div class = "panel-body">
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
                 <div><%= f.label :email %><br />
@@ -60,14 +59,16 @@
           		<div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
         		  <% end %>
               <%= f.submit "Sign in", :class => 'btn btn-primary', :data => { :dismiss => "modal"} %>
+              <br></br>
               <div class="modal-footer">
             
             <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
               <% end %>            
-              <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+             
               </div>
       </div>
     </div>
+     <%= link_to "Sign up", new_registration_path(resource_name) %><br />
   </div>
 </div>
 </div>
@@ -102,6 +103,8 @@
     </div>
     </div>
 </div>
+
+
 
 <%= yield %>
 
