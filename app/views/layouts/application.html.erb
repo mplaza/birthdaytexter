@@ -18,9 +18,11 @@
 
 		<% else %>
 		<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#loginModal">
-  Sign In
-</button>
-    <li><%= link_to "Sign Up", new_user_registration_path %></li>
+      Sign In
+    </button>
+    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#signupModal">
+      Sign Up
+    </button>
 		<% end %>
 		<li class="navbar-text">       </li>	
 	</ul>
@@ -28,26 +30,71 @@
 </nav>
 
 
+
 <div class="modal fade" id="loginModal" tabindex="-1">
-<div class="modal-dialog">
+<div class="modal-dialog modal-sm">
 <div class="modal-content">
   <div class="modal-header">
     <button class="close" data-dismiss="modal">×</button>
     <h3>Sign In</h3>
   </div>
   <div class="modal-body">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-          <div><%= f.label :email %><br />
-  			<%= f.email_field :email, autofocus: true %></div>
+    <% resource_class.omniauth_providers.each do |provider| %>
+        <%= link_to omniauth_authorize_path(resource_name, provider) do%>
+          <button class='zocial facebook'>Login with Facebook</button>
+        <% end %>
+      <% end %>
+      <br></br>
+    <button class='zocial email'>Or Login with Email</button>
+    <br></br>
+    <div class="panel panel-success">
+      <div class = "panel-body">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                <div><%= f.label :email %><br />
+        			<%= f.email_field :email, autofocus: true %></div>
 
-  		  <div><%= f.label :password %><br />
-    		<%= f.password_field :password, autocomplete: "off" %></div>
+        		  <div><%= f.label :password %><br />
+          		<%= f.password_field :password, autocomplete: "off" %></div>
 
-  		  <% if devise_mapping.rememberable? -%>
-    		<div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  		  <% end %>
+        		  <% if devise_mapping.rememberable? -%>
+          		<div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+        		  <% end %>
+              <%= f.submit "Sign in", :class => 'btn btn-primary', :data => { :dismiss => "modal"} %>
+              <div class="modal-footer">
+            
+            <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+              <% end %>            
+              <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+              </div>
+      </div>
+    </div>
   </div>
-        <%= f.submit "Sign in", :class => 'btn btn-primary', :data => { :dismiss => "modal"} %>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="signupModal" tabindex="-1">
+<div class="modal-dialog modal-sm">
+<div class="modal-content">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Sign Up</h3>
+  </div>
+  <div class="modal-body">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email, autofocus: true %></div>
+
+  <div><%= f.label :password %><br />
+    <%= f.password_field :password, autocomplete: "off" %></div>
+
+  <div><%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+
+  <div><%= f.submit "Sign up" %></div>
+  </div>
         <div class="modal-footer">
         <%= render "devise/shared/links" %>
         <% end %>
