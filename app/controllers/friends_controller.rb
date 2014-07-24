@@ -1,6 +1,9 @@
 class FriendsController < ApplicationController
   def index
     @friends = Friend.all
+    @graph = Koala::Facebook::API.new(current_user.access_token)
+    @userbirthday = @graph.get_object("me?fields=birthday")["birthday"]
+    @userfriends = @graph.get_connections("me", "friends")
     # fb_userdata(current_user.access_token, current_user.uid) 
   end
 

@@ -1,11 +1,38 @@
+
+<div class="container">
+<div class="col-md-9 col-md-offset-1">
+<div class="btn btn-info" data-toggle="modal" data-target="#findfriendModal">Find Friends</div>
+
+<div class="modal fade" id="findfriendModal" tabindex="-1">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+		  <div class="modal-body">
+		  		<button class="close" data-dismiss="modal">×</button>
+		  <% @userfriends.each do |u| %>
+		  	<%= u %>
+		  <% end %>
+		  <% if @userfriends.length == 0 %>
+		  	Sorry, none of your friends have the app yet!
+		  <% end %>
+
+		  </div>
+		</div>
+	</div>
+</div>
+
+<%= @userbirthday %>
 <h1> Friends </h1>
-<div contaner-fluid>
 	<% @friends.each do |f| %>
-	<p><%= f.name %>: <%= f.monthbirth %>/<%= f.daybirth %></p>
+	<p><%= f.name %>: <%= f.monthbirth %>/<%= f.daybirth %>
+	<%= link_to 'details', friend_path(f) %></p>
 	<% end %>
 </div>
 
 <%= @token %>
 
+<% if current_user != nil %>
 <%= link_to 'new friend', new_friend_path, :class =>"btn btn-success" %>
+<% end %>
 
+</div>
+</div>

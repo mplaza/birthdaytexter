@@ -9,7 +9,7 @@
 <body>
 
 <nav class="navbar navbar-inverse" role="navigation">
-	<a class="navbar-brand" id = "main" href="/friends">I WANNA TEXT YOU UP</a>
+	<a class="navbar-brand" id = "main" href="/friends">TEXT LIKE IT'S YOUR BIRTHDAY</a>
 	<ul class="nav navbar-nav navbar-right"> 
 		<% if user_signed_in? %>
 		<li> <%= image_tag current_user.profile_picture_url %></a>
@@ -17,12 +17,12 @@
 			    <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
 
 		<% else %>
-		<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#loginModal">
+		<li class="navbar-text pointer" data-toggle="modal" data-target="#loginModal">
       Sign In
-    </button>
-    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#signupModal">
+    </li>
+    <li class="navbar-text pointer" data-toggle="modal" data-target="#signupModal">
       Sign Up
-    </button>
+    </li>
 		<% end %>
 		<li class="navbar-text">       </li>	
 	</ul>
@@ -44,9 +44,9 @@
         <% end %>
       <% end %>
       <br></br>
-    <button class='zocial email' data-toggle="collapse" data-target="#emailsignup">Or Login with Email</button>
+    <button class='zocial email' data-toggle="collapse" data-target="#emailsignin">Or Login with Email</button>
     <br></br>
-    <div class="panel panel-success collapse" id = "emailsignup">
+    <div class="panel panel-success collapse" id = "emailsignin">
       <div class = "panel-body">
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
                 <div><%= f.label :email %><br />
@@ -59,13 +59,9 @@
           		<div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
         		  <% end %>
               <%= f.submit "Sign in", :class => 'btn btn-primary', :data => { :dismiss => "modal"} %>
-              <br></br>
-              <div class="modal-footer">
-            
+              <br></br>            
             <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
               <% end %>            
-             
-              </div>
       </div>
     </div>
      <%= link_to "Sign up", new_registration_path(resource_name) %><br />
@@ -77,31 +73,40 @@
 <div class="modal fade" id="signupModal" tabindex="-1">
 <div class="modal-dialog modal-sm">
 <div class="modal-content">
-  <div class="modal-header">
+  <div class="modal-body">
     <button class="close" data-dismiss="modal">×</button>
-    <h3>Sign Up</h3>
   </div>
   <div class="modal-body">
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
-
-  <div><%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
-
-  <div><%= f.submit "Sign up" %></div>
-  </div>
-        <div class="modal-footer">
-        <%= render "devise/shared/links" %>
+   <% resource_class.omniauth_providers.each do |provider| %>
+        <%= link_to omniauth_authorize_path(resource_name, provider) do%>
+          <button class='zocial facebook'>Sign Up with Facebook</button>
         <% end %>
-        </div>
+      <% end %>
+      <br></br>
+    <button class='zocial email' data-toggle="collapse" data-target="#emailsignup">Or Sign Up with Email</button>
+    <br></br>
+    <div class="panel panel-success collapse" id = "emailsignup">
+      <div class = "panel-body">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= devise_error_messages! %>
+
+          <div><%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true %></div>
+
+          <div><%= f.label :password %><br />
+            <%= f.password_field :password, autocomplete: "off" %></div>
+
+          <div><%= f.label :password_confirmation %><br />
+            <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+          <br></br>
+          <div><%= f.submit "Sign up", :class => 'btn btn-primary', :data => { :dismiss => "modal"} %></div>
+          <% end %>
+      </div>
     </div>
-    </div>
+     <%= link_to "Sign in", new_session_path(resource_name) %><br />
+  </div>
+</div>
+</div>
 </div>
 
 
